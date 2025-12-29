@@ -1,0 +1,37 @@
+{
+  "name": "gitlab-issue-prompt",
+  "version": "1.0.0",
+  "description": "CLI tool to extract GitLab issue data for AI context",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "issue-prompt": "./dist/index.js"
+  },
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "gitlab",
+    "cli",
+    "ai",
+    "prompt",
+    "issues"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.3.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
