@@ -27,6 +27,7 @@ export interface CliOptions {
   noComments: boolean;
   commentsOnly: boolean;
   json: boolean;
+  opencode: boolean;
 }
 
 export function loadConfig(): Config {
@@ -58,6 +59,7 @@ export function parseCliArgs(args: string[]): CliOptions {
     noComments: false,
     commentsOnly: false,
     json: false,
+    opencode: false,
   };
 
   const positionalArgs: string[] = [];
@@ -69,6 +71,8 @@ export function parseCliArgs(args: string[]): CliOptions {
       options.commentsOnly = true;
     } else if (arg === "--json") {
       options.json = true;
+    } else if (arg === "--opencode") {
+      options.opencode = true;
     } else if (arg === "--help" || arg === "-h") {
       printHelp();
       process.exit(0);
@@ -111,6 +115,7 @@ Options:
   --no-comments      Exclude comments from output
   --comments-only    Only include user comments (exclude system notes)
   --json             Output raw JSON instead of formatted markdown
+  --opencode         Open the prompt directly in opencode
   -h, --help         Show this help message
 
 Examples:

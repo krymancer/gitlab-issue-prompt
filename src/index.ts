@@ -1,8 +1,26 @@
 #!/usr/bin/env node
 
+import { spawn } from "child_process";
+
 import { loadConfig, parseCliArgs } from "./config.js";
 import { GitLabClient, GitLabApiError } from "./gitlab/index.js";
 import { formatIssuePrompt, formatIssueJson } from "./formatters/index.js";
+
+function runOpencode(prompt: string): void {
+  const child = spawn("opencode", ["--prompt", prompt], {
+    stdio: "inherit",
+    shell: false,
+  });
+
+  child.on("error", (err) => {
+    console.error(`Failed to start opencode: ${err.message}`);
+    process.exit(1);
+  });
+
+  child.on("close", (code) => {
+    process.exit(code ?? 0);
+  });
+}
 
 async function main(): Promise<void> {
   // Parse command line arguments (skip node and script path)
@@ -22,9 +40,12 @@ async function main(): Promise<void> {
       onlyUserComments: options.commentsOnly,
     });
 
-    // Format and output
     if (options.json) {
       console.log(formatIssueJson(data));
+    } else if (options.opencode) {
+      const prompt = formatIssuePrompt(data);
+      runOpencode(prompt);
+      return;
     } else {
       console.log(formatIssuePrompt(data));
     }
